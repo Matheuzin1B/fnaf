@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Loja FNaF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .carrinho-btn {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      background: #ff0000;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+    }
+
+    .carrinho {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background-color: #111;
+      color: white;
+      padding: 20px;
+      box-shadow: -3px 0 10px rgba(0, 0, 0, 0.5);
+      transition: right 0.3s ease;
+    }
+
+    .carrinho.ativo {
+      right: 0;
+    }
+
+    .fechar-btn {
+      background: none;
+      color: white;
+      border: none;
+      font-size: 20px;
+      float: right;
+      cursor: pointer;
+    }
+
+    .item {
+      margin: 15px 0;
+      border-bottom: 1px solid #444;
+      padding-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="carrinho-btn" onclick="abrirCarrinho()">🛒 Carrinho</button>
+
+  <div class="carrinho" id="carrinho">
+    <button class="fechar-btn" onclick="fecharCarrinho()">×</button>
+    <h2>Seu Carrinho</h2>
+    <div id="itens-carrinho"></div>
+    <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
+  </div>
+
+  <div style="padding: 20px;">
+    <h1>Produtos FNaF</h1>
+    <div>
+      <p>Boneco Freddy - R$ 50,00</p>
+      <button onclick="adicionarAoCarrinho('Boneco Freddy', 50)">Adicionar ao carrinho</button>
+    </div>
+    <div>
+      <p>Camiseta Chica - R$ 60,00</p>
+      <button onclick="adicionarAoCarrinho('Camiseta Chica', 60)">Adicionar ao carrinho</button>
+    </div>
+  </div>
+
+  <script>
+    let carrinho = [];
+    
+    function abrirCarrinho() {
+      document.getElementById("carrinho").classList.add("ativo");
+      atualizarCarrinho();
+    }
+
+    function fecharCarrinho() {
+      document.getElementById("carrinho").classList.remove("ativo");
+    }
+
+    function adicionarAoCarrinho(nome, preco) {
+      carrinho.push({ nome, preco });
+      alert(`${nome} adicionado ao carrinho!`);
+    }
+
+    function atualizarCarrinho() {
+      const container = document.getElementById("itens-carrinho");
+      const totalSpan = document.getElementById("total");
+      container.innerHTML = "";
+      let total = 0;
+
+      carrinho.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.textContent = `${item.nome} - R$ ${item.preco.toFixed(2)}`;
+        container.appendChild(div);
+        total += item.preco;
+      });
+
+      totalSpan.textContent = total.toFixed(2);
+    }
+  </script>
+
+</body>
+</html>
